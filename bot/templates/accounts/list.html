@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Список аккаунтов{% endblock %}
+
+{% block content %}
+
+{% if start %}
+
+	<form action="/accounts/end", method='POST'>
+	 
+		{% csrf_token %}
+	
+		<button type="submit">Выключить бота</button>
+
+	</form>
+
+{% else %}
+
+	{% if accounts_list %}
+
+
+		{% for a in accounts_list %}
+
+		<h3><a href="{% url 'Accounts:settings' a.id %}">{{a.call}}</a></h3>
+
+		{% endfor %}
+
+
+
+	{% else %}
+		Аккаунтов нет
+	{% endif %}
+
+	<h4><a href="{% url 'Accounts:new_account' %}">Создать новый аккаунт</a></h4>
+	
+	<form action="/accounts/start", method='POST'>
+	 
+		{% csrf_token %}
+	
+		<button type="submit">Запустить бота</button>
+
+	</form>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Новый аккаунт{% endblock %}
+
+{% block content %}
+
+	<h2>Вход в аккаунт ВКонтакте</h2>
+	<h4>(Введите логин и пароль от нужного аккаунта ВКонтакте)</h4>
+
+	<form action="/accounts/create", method='POST'>
+
+		{% csrf_token %}
+		
+		<p>Логин</p>
+		<input type='text' name="login" required=""></input><br>
+
+		<p>Пароль</p>
+		<input type='password' name="password" required=""></input><br><br>
+		
+		{% if error %}
+    <div id="error" title="Error">
+        <p>Неправильный логин или пароль</p>
+    </div>
+		{% endif %}
+
+		<button type="submit">Войти</button>
+
+	</form>
+
+
+
+{% endblock %}
