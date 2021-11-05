@@ -36,6 +36,14 @@ def get_upd(TOKEN, key, server, ts, group):
 					key, server, ts = get_server(TOKEN, group)
 					return get_upd(TOKEN, key, server, ts)
 			ts = upd['ts']
+			try:
+				for k in upd['updates']:
+					if k[0] == 4:
+						if 'a' in k[-1]:
+							pass
+			except Exception as err:
+				print(k, err)
+				return [], key, server, ts
 			return upd['updates'], key, server, ts
 		except:
 			continue

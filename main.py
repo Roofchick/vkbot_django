@@ -58,7 +58,7 @@ def main(ac, TOKEN, STATUS, SLEEP, MARK, NAME, auto_friends, ls_user, group_name
     regulars = ('id', 'first_name', 'last_name', 'about', 'bdate', 'city', 'count_messages', 'uptime')
     if not group:
         BotID = requests.get('https://api.vk.com/method/users.get',
-                             params={'access_token': TOKEN, 'v': 5.21, 'fields': 'id'})
+                             params={'access_token': TOKEN, 'v': 5.121, 'fields': 'id'})
         BotID = json.loads(BotID.text)
         if 'error' in BotID:
             print(BotID)
@@ -113,7 +113,7 @@ def main(ac, TOKEN, STATUS, SLEEP, MARK, NAME, auto_friends, ls_user, group_name
                         if int(user_id) > 0:
                             while True:
                                 user = requests.get('https://api.vk.com/method/users.get',
-                                                    params={'access_token': TOKEN, 'v': 5.21, 'fields': 'id',
+                                                    params={'access_token': TOKEN, 'v': 5.121, 'fields': 'id',
                                                             'user_ids': user_id})
                                 user = json.loads(user.text)
                                 if 'error' in user:
@@ -225,10 +225,10 @@ def main(ac, TOKEN, STATUS, SLEEP, MARK, NAME, auto_friends, ls_user, group_name
                                        'random_id': random.randint(1, 1000000)}
                             if attachments:
                                 paramss.update({'attachment': ','.join(attachments)})
-                            if reply and ls_ans:
+                            if reply and ls_ans and not 'source_act' in i[-1]:
                                 paramss.update({'reply_to': i[1]})
                             a = requests.post('https://api.vk.com/method/messages.send', params=paramss)
-                            print(a.text)
+                            print(a.text) 
                             max += 1
                             a = json.loads(a.text)
                             if len(a) > 1:
@@ -259,7 +259,7 @@ def main(ac, TOKEN, STATUS, SLEEP, MARK, NAME, auto_friends, ls_user, group_name
                         if int(user_id) > 0:
                             while True:
                                 user = requests.get('https://api.vk.com/method/users.get',
-                                                    params={'access_token': TOKEN, 'v': 5.21, 'fields': 'id',
+                                                    params={'access_token': TOKEN, 'v': 5.121, 'fields': 'id',
                                                             'user_ids': user_id})
                                 user = json.loads(user.text)
                                 if 'error' in user:
@@ -373,7 +373,7 @@ def main(ac, TOKEN, STATUS, SLEEP, MARK, NAME, auto_friends, ls_user, group_name
                             '''
 							if reply:
 								print(i)
-								paramss.update({'reply_to': i['object']['message']['conversation_message_id']})
+								paramss.update({'reply_to': i['object']['message']['con versation_message_id']})
 							'''
                             a = requests.post('https://api.vk.com/method/messages.send', params=paramss)
                             max += 1
