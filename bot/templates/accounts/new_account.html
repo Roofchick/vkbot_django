@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Новый аккаунт{% endblock %}
+{% block content %}
+	<form action="{% url 'Accounts:new_acc_login_or_token' %}", method='POST'>
+		{% csrf_token %}
+		<div class="AccountDiv"><button type="submit" class="AccountSettings"><h3 class="Start">Назад</h3></button></div><br/><br/>
+	</form>
+	<div class="AccountDiv AccountName">
+	<div class="auth_name">
+		<h2>Подключение бота к странице</h2>
+		<h4>(Введите логин и пароль от нужного аккаунта ВКонтакте)</h4>
+	</div></div><br/>
+	<div class="AccountDiv AccountName"><div class="auth">
+		<form action="/accounts/create_account", method='POST'>
+			{% csrf_token %}
+			<p>Логин</p>
+			<input type='text' name="login" required=""></input><br>
+			<p>Пароль</p>
+			<input type='password' name="password" required=""></input><br><br>
+			{% if error %}
+	    <div id="error" title="Error"><p>Неправильный логин или пароль</p></div>
+			{% endif %}
+			<button type="submit" class="Save">Войти</button>
+		</form></div></div>
+{% endblock %}

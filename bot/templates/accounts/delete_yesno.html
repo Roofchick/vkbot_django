@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Подтвердите удаление аккаунта{% endblock %}
+
+{% block content %}
+	<div class="AccountDiv AccountName">
+	<div class="auth_name">
+
+	<h2>Вы уверены, что хотете удалить аккаунт?</h2>
+	</div></div>
+
+
+	<table class="DeleteYesNo">
+	<tr><th>
+		<form action="{% url 'Accounts:settings' account_id %}", method='POST'>
+		 
+			{% csrf_token %}
+			
+			<div class="AccountDiv NoDelete"><button type="submit" class="AccountSettings"><h3 class="Start">Нет</h3></button></div><br/><br/>
+	
+		</form>
+	</th>
+
+	<th>
+	<form action="{% url 'Accounts:delete_account' account_id %}", method='POST'>
+	 
+		{% csrf_token %}
+		<div class="AccountDiv YesDelete"><button type="submit" class="DeleteAccount"><h3 class="Delete">Да</h3></button></div><br/><br/>
+
+	</form>
+	</th></tr></table>
+
+{% endblock %}

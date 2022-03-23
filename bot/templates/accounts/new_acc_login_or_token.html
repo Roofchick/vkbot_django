@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Новый аккаунт{% endblock %}
+
+{% block content %}
+
+	<form action="{% url 'Accounts:new' %}", method='POST'>
+
+		{% csrf_token %}
+
+		<div class="AccountDiv"><button type="submit" class="AccountSettings"><h3 class="Start">Назад</h3></button></div><br/><br/>
+
+	</form>
+
+
+
+	<form action="{% url 'Accounts:new_account' %}", method='POST'>
+
+		{% csrf_token %}
+
+		<div class="AccountDiv"><button type="submit" class="AccountSettings"><h3 class="Start">Войти через логин или пароль</h3></button></div><br/>
+
+	</form>
+
+
+
+	<form action="{% url 'Accounts:new_account_token' %}", method='POST'>
+
+		{% csrf_token %}
+
+		<div class="AccountDiv"><button type="submit" class="AccountSettings"><h3 class="Start">Войти через токен</h3></button></div>
+
+	</form>
+
+</table>
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Новый аккаунт{% endblock %}
+
+{% block content %}
+
+	<form action="{% url 'Accounts:new' %}", method='POST'>
+
+		{% csrf_token %}
+
+		<div class="AccountDiv"><button type="submit" class="AccountSettings"><h3 class="Start">Назад</h3></button></div><br/><br/>
+
+	</form>
+
+	<div class="AccountDiv AccountName">
+	<div class="auth_name">
+		<h2>Подключение бота к группе</h2>
+		<h4>Обязательно прочитайте инструкцию внизу этой страницы</h4>
+	</div></div><br/>
+
+	<div class="AccountDiv AccountName">
+	<div class="auth">
+
+	<form action="/accounts/create_group", method='POST'>
+
+		{% csrf_token %}
+		
+		<p>Ключ доступа</p>
+		<input type='text' name="longpoll_token" required=""></input><br><br>
+		
+		<p>id сообщества</p>
+		<input type='text' name="id" required=""></input><br><br>
+		
+		{% if error %}
+    <div id="error" title="Error">
+        <p>Неправильный логин или пароль</p>
+    </div>
+		{% endif %}
+
+		<button type="submit" class="Save">Войти</button>
+
+	</form></div>
+	</div><br><br>
+
+	<div class="AccountDiv AccountName">
+	<div class="auth_name">
+
+	<h2>Инструкция</h2>
+	<h4>Обязательно выполните эти действия:</h4>
+	<h4>(Все действия делать через компьютер или версию сайта для ПК с телефона)</h4>
+
+	<div class="Instr">
+	<ul>
+		<li>Открыть вкладку &laquo;Управление&raquo; на странице сообщества</li>
+		<li>Во вкладке &laquo;Сообщения&raquo;:</li>
+		<ol><li>Включить сообщения сообщества и нажать на кнопку &laquo;Сохранить&raquo;</li></ol>
+		<li>Во вкладке &laquo;Настройки для бота&raquo;</li>
+		<ol>
+			<li>Включить возможности ботов</li>
+			<li>Включить пункт &laquo;Разрешать добавлять сообщество в беседы&raquo;</li>
+			<li>нажать на кнопку &laquo;Сохранить&raquo;</li>
+		</ol>
+		<li>Перейти в раздел &laquo;Настройки&raquo;</li>
+		<li>Перейти в подраздел &laquo;Работа с API&raquo;</li>
+		<li>Перейти на вкладку &laquo;Long Poll API&raquo;</li>
+		<li>На вкладке &laquo;Настройки&raquo;:</li>
+		<ol>
+			<li>Включить Long Poll API</li>
+			<li>Выбрать версию API 5.120 или новее</li>
+		</ol>
+		<li>На вкладке &laquo;Типы событий&raquo;:</li>
+		<ol>
+			<li>Включить &laquo;Входящее сообщение&raquo;</li>
+		</ol>
+		<li>Перейти на вкладку &laquo;Ключи доступа&raquo;:</li>
+		<ol>
+			<li>Нажать на кнопку&laquo;Создать ключ&raquo;</li>
+			<li>Разрешить доступ ко всем пунктам</li>
+			<li>Нажать на кнопку &laquo;Создать&raquo;</li>
+			<li>Подтвердить номер телефона</li>
+			<li>Скопировать ключ доступа и вставить в поле &laquo;Ключ доступа&raquo; вверху этой страницы</li>
+		</ol>
+		<li>Теперь получаем id сообщества:</li>
+		<ol>
+			<li>Вернуться на страницу сообщества</li>
+			<li>Скопировать ссылку на сообщество</li>
+			<li>Перейти на сайт <a href="https://regvk.com/id/">REGVK</a></li>
+			<li>Вставить ссылку на сообщество и нажать на кнопку &laquo;Определить ID&raquo;</li>
+			<li>Скопировать id сообщества из пункта &laquo;ID публичной страницы&raquo;</li>
+			<li>Вставить id в поле &laquo;id сообщества&raquo; вверху этой страницы</li>
+		</ol>
+		<li>Нажать кнопку &laquo;Войти&raquo; вверху этой страницы</li>
+	</ul>
+
+</div></div></div>
+
+
+
+
+
+
+{% endblock %}

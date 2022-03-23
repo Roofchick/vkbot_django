@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Список аккаунтов{% endblock %}
+{% block content %}
+{% if start %}
+	<form action="/accounts/end", method='POST'>
+		{% csrf_token %}
+		<div class="Start"><button type="submit" class="StartBot"><h3 class="Start">Выключить бота</h3></button></div>
+	</form>
+{% else %}
+	{% if accounts_list %}
+		{% for a in accounts_list %}
+		<form action="{% url 'Accounts:settings' a.id %}", method='POST'>
+			{% csrf_token %}
+			<div class="AccountDiv"><button type="submit" class="AccountSettings">
+			<div class="AccountName">
+				<h2>{{a.call}}</h2>
+				<p>Обращение: {{a.name}}; Метка: ({{a.mark}})</p>
+			</div></button></div></form><br/>{% endfor %}
+	<form action="/accounts/start", method='POST'>{% csrf_token %}
+		<div class="Start"><button type="submit" class="StartBot"><h3 class="Start">Запустить бота</h3></button></div><br/><br/>
+	</form>
+	{% endif %}
+	<form action="{% url 'Accounts:new' %}", method='POST'>{% csrf_token %}
+		<div class="AccountDiv"><button type="submit" class="AccountSettings"><h3 class="Start">Добавить новую страницу/группу</h3></button></div>
+	</form>
+{% endif %}
+{% endblock %}

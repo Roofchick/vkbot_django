@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}{{account.call}}{% endblock %}
+{% block content %}
+
+
+	<form action="{% url 'Accounts:index' %}", method='POST'>
+
+		{% csrf_token %}
+
+		<div class="AccountDiv"><button type="submit" class="AccountSettings"><h3 class="Start">Вернуться к списку аккаунтов</h3></button></div><br/><br/>
+
+	</form>
+
+	<div class="AccountDiv AccountName">
+	<div class="auth_name">
+	<h2>Аккаунт: {{account.call}}</h2>
+	</div></div><br/>
+
+
+	<div class="AccountDiv AccountName">
+	<div class="auth">
+
+	<form action="{% url 'Accounts:save' account.id %}", method='POST'>
+		{% csrf_token %}
+		<p>Обращение к боту</p>
+		<input name="name" value="{{account.name}}"></input><br>
+		<p>Метка бота (Отображается в скобках в начале сообщений)</p>
+		<input name="mark" value="{{account.mark}}"></input><br>
+		<p>Задержка перед отправкой сообщений</p>
+		<input name="sleep" value="{{account.sleep}}" type="number"></input><br>
+		<p>База ответов</p>
+		<input name="base_name" value="{% if error_base %}{{error_base}}{% else %}{{account.base_name}}{% endif %}", id="base_name" /><br/>
+		{% if error_base %}
+			<p style="color:Red;">База ответов не найдена</p>
+		{% endif %}
+		{% if not account.group %}
+			<p>Статус</p>
+			<textarea name="status" cols="40" rows="4">{{account.status}}</textarea><br><br>
+			<input name="auto_friends" value="{{account.auto_friends}}" type="checkbox" id="auto_friends"
+			{% if account.auto_friends %}
+			 checked
+			{% endif %}
+			/><label for="auto_friends">Принимать заявки в друзья</label><br><br>
+		{% else %}
+			<br/>
+		{% endif %}
+		<input name="ls_user" value="{{account.ls_user}}" type="checkbox" id="ls_user"
+		{% if account.ls_user %}
+		 checked
+		{% endif %}
+		/><label for="ls_user">Обращение в личных сообщениях</label><br><br>
+		<input name="group_name" value="{{account.group_name}}" type="checkbox" id="group_name"
+		{% if account.group_name %}
+		 checked
+		{% endif %}
+		/><label for="group_name">Обращение к пользователю в беседах (Бот будет отвечать "Имя, сообщение")</label><br><br>
+		<input name="voice_bot" value="{{account.voice_bot}}" type="checkbox" id="voice_bot"
+		{% if account.voice_bot %}
+		 checked
+		{% endif %}
+		/><label for="voice_bot">Ответ голосовыми сообщениями</label><br><br>
+		<input name="reply" value="{{account.reply}}" type="checkbox" id="reply"
+		{% if account.reply %}
+		 checked
+		{% endif %}
+		/><label for="reply">Пересылать сообщения собеседников в беседах</label><br><br>
+		<button type="submit" class="Save">Сохранить</button>
+	</form>
+
+	</div>
+	</div><br><br>
+
+
+	<form action="{% url 'Accounts:delete_yesno' account.id %}", method='POST'>
+
+		{% csrf_token %}
+
+		<div class="AccountDiv"><button type="submit" class="DeleteAccount"><h3 class="Delete">Удалить аккаунт</h3></button></div><br/><br/>
+
+	</form>
+
+{% endblock %}
