@@ -1,3 +1,4 @@
+#v=1.0
 '''
 try:
     import requests, json, random, time, string, threading, textwrap
@@ -41,17 +42,17 @@ from accounts.models import Status
 
 def main(ac, TOKEN, STATUS, SLEEP, MARK, NAME, auto_friends, ls_user, group_name, base_name, group, commands, voice_bot, reply):
     try:
-    	with open('cities.json') as f:
+    	with open('base/cities.json', encoding="utf-8") as f:
     		cities = json.load(f)
-    except:
-    	cities = False
+    except Exception as err:
+        print(err)
+        cities = False
     	
     with open('blacklist.txt') as f:
     	f = f.read()
     	blacklist = f.split('\n')[2:]
     	black_mess = f.split('\n')[0]
     	
-    print(f'Аккаунт {ac} запущен')
     commands = []
     cities_users = {}
     disable_mentions = False
@@ -65,9 +66,11 @@ def main(ac, TOKEN, STATUS, SLEEP, MARK, NAME, auto_friends, ls_user, group_name
         BotID = BotID['response'][0]['id']
     else:
         BotID = group
+    
     count_message = 0
     base = read_base(base_name)
     key, server, ts = get_server(TOKEN, group)
+    print(f'Аккаунт {ac} запущен')
     time_status = time.localtime()
     start_bot = time.time()
     if not group:
@@ -228,11 +231,7 @@ def main(ac, TOKEN, STATUS, SLEEP, MARK, NAME, auto_friends, ls_user, group_name
                             if reply and ls_ans and not 'source_act' in i[-1]:
                                 paramss.update({'reply_to': i[1]})
                             a = requests.post('https://api.vk.com/method/messages.send', params=paramss)
-                            print(a.text) 
                             max += 1
-                            a = json.loads(a.text)
-                            if len(a) > 1:
-                                print(a)
                             if len(ans) > 500 * max:
                                 continue
                             break
@@ -276,7 +275,7 @@ def main(ac, TOKEN, STATUS, SLEEP, MARK, NAME, auto_friends, ls_user, group_name
                             else:
                                 message = i['object']['message']['text']
                         if NAME and ls_ans and not tr:
-                            if message[:len(NAME) + 2].lower() == NAME + ', ':
+                            if message[:len(NAME) + 2].lower() == NAME.lower() + ', ':
                                 message = message[len(NAME) + 2:]
                             else:
                                 for black in blacklist:
@@ -284,11 +283,9 @@ def main(ac, TOKEN, STATUS, SLEEP, MARK, NAME, auto_friends, ls_user, group_name
                                         ans = black_mess
                                         break
                                 else:
-                                    print(i)
                                     if 'reply_message' in i['object']['message']:
                                         reply_mess_id = i['object']['message']['reply_message']['from_id']
                                         if str(reply_mess_id)[1:] != BotID:
-                                            print(type(BotID), type(str(reply_mess_id)[1:]), BotID, str(reply_mess_id)[1:])
                                             continue
                                     else:
                                         if message.lower()[:4] == '/try' and user:
@@ -370,16 +367,13 @@ def main(ac, TOKEN, STATUS, SLEEP, MARK, NAME, auto_friends, ls_user, group_name
                                            'random_id': random.randint(1, 11000000)}
                             if attachments:
                                 paramss.update({'attachment': ','.join(attachments)})
-                            '''
-							if reply:
-								print(i)
-								paramss.update({'reply_to': i['object']['message']['con versation_message_id']})
-							'''
+                                '''
+                            if reply:
+                                paramss.update({'forward': json.dumps({'conversation_message_ids': {i['object']['message']['conversation_message_id']}})})
+                                '''
                             a = requests.post('https://api.vk.com/method/messages.send', params=paramss)
+                            print(a.text)
                             max += 1
-                            a = json.loads(a.text)
-                            if len(a) > 1:
-                                print(a)
                             if len(ans) > 500 * max:
                                 continue
                             break
